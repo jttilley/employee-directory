@@ -1,8 +1,10 @@
 import React from "react";
 import "../styles/DataTable.css";
 
-// function DataTable(props) {
-//   return 
-// }
+function DataTable({children}) {
+  return (
+    <table {...children} />
+  );
+}
 
-// export default DataTable;
+export default DataTable;

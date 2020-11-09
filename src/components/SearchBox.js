@@ -1,12 +1,27 @@
-import React from "react";
+import React, {useContext} from "react";
 import "../styles/SearchBox.css";
+import EmployeeContext from "../utils/globalState";
+import EmployerContext from "../utils/globalState"
 
-function Search(props) {
+function SearchBox() {
+  const {search, handleFormSubmit, handleInputChange} = useContext(EmployeeContext);
+
   return (
     <form className="form-inline">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+      <input 
+        className="form-control mr-sm-2" 
+        name="search"
+        type="search" 
+        placeholder="Find Employee"
+        aria-label="Search" 
+        value={search}
+        id="search"
+        onChange={handleInputChange}
+      />
+      <br />
+        <button onClick={handleFormSubmit}>Search</button>
     </form>
   );
 }
 
-export default Search;
+export default SearchBox;
