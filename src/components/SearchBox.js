@@ -3,7 +3,7 @@ import "../styles/SearchBox.css";
 import EmployeeContext from "../utils/Employee";
 
 function SearchBox() {
-  const {search, handleFormSubmit, handleInputChange} = useContext(EmployeeContext);
+  const {search, handleInputChange} = useContext(EmployeeContext);
 
   return (
     <form className="form-inline">
@@ -17,8 +17,6 @@ function SearchBox() {
         id="search"
         onChange={handleInputChange}
       />
-      <br />
-        <button onClick={handleFormSubmit}>Search</button>
     </form>
   );
 }

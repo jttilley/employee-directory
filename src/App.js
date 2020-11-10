@@ -26,6 +26,7 @@ function App() {
     initEmployees();
   }, []);
 
+  //initialize the employees list
   const initEmployees = async () => {
     try {
       const res = await API.getUsers();
@@ -38,26 +39,24 @@ function App() {
     }
   };
 
-  const findEmployee = () => {
-
+  // filter list by search
+  const searchEmployees = (value) => {
+    const filtered = employees.filter(emp => {
+      return Object.values(emp)
+        .join()
+        .toLowerCase()
+        .indexOf(value.toLowerCase()) > -1;
+    });
+    setUsersState({...usersState, search: value, users: filtered});
   }
-  
 
-  
-  const searchEmployees = (query) => {
-
-  }
-
+  // search while typing
   const handleInputChange = (event) => {
-    const { value } = event.target;
-    setUsersState({...usersState, search:value});
+    const {value} = event.target
+    searchEmployees(value);
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    searchEmployees(search);
-  };
-
+  //sort by names
   function sortNames( a, b ) {
     if ( a.name.first < b.name.first ){
       return -1;
@@ -68,6 +67,7 @@ function App() {
     return 0;
   }
   
+  //sort by phone numbers
   function sortPhones( a, b ) {
     if ( a.phone < b.phone ){
       return -1;
@@ -78,6 +78,7 @@ function App() {
     return 0;
   }
   
+  // sort by emails
   function sortEmails( a, b ) {
     if ( a.email < b.email ){
       return -1;
@@ -88,6 +89,7 @@ function App() {
     return 0;
   }
 
+  // sort by birthdays
   function sortDOBs( a, b ) {
     if ( a.dob.date < b.dob.date ){
       return -1;
@@ -102,6 +104,7 @@ function App() {
     // console.log('handleClickSort event: ', event);
     let sorted = []
 
+    //choose sorting function based on what was clicked
     switch(event.target.innerText) {
       case "Name":
         sorted = users.sort(sortNames);
@@ -127,7 +130,6 @@ function App() {
         search,
         users,
         handleInputChange,
-        handleFormSubmit,
       }}
     >
 
