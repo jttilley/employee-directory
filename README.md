@@ -6,7 +6,7 @@
 Uses React to lists employees and the employees can be searched and sorted.
 
 ## Links
-Deployed link: deployed
+Deployed link: https://employee-directory-react-3.herokuapp.com/
 
 Repo link: https://github.com/jttilley/employee-directory
 

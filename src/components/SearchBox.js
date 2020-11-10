@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import "../styles/SearchBox.css";
-import EmployeeContext from "../utils/globalState";
-import EmployerContext from "../utils/globalState"
+import EmployeeContext from "../utils/Employee";
 
 function SearchBox() {
   const {search, handleFormSubmit, handleInputChange} = useContext(EmployeeContext);
