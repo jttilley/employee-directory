@@ -1,15 +1,11 @@
 import React, {useState, useEffect} from "react";
 import Nav from "./components/Nav";
 import Header from "./components/Header";
-// import DataTable from "./components/DataTable";
-// import DataBody from "./components/DataBody";
-// import Wrapper from "./components/Wrapper";
+import DataBody from "./components/DataBody";
 import API from "./utils/API";
 import { Table } from "reactstrap";
 import moment from "moment";
-
 import EmployeeContext from "./utils/Employee";
-import DataBody from "./components/DataBody";
 
 let employees = []; //global var for employees list 
 
@@ -42,10 +38,11 @@ function App() {
   // filter list by search
   const searchEmployees = (value) => {
     const filtered = employees.filter(emp => {
-      return Object.values(emp)
-        .join()
-        .toLowerCase()
-        .indexOf(value.toLowerCase()) > -1;
+      const str = `${emp.name.first} ${emp.name.last}
+      ${emp.phone}
+      ${emp.email}
+      ${moment(emp.dob.date).format('MM/DD/YYYY')}`
+      return str.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
     setUsersState({...usersState, search: value, users: filtered});
   }
