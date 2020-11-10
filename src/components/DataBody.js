@@ -3,7 +3,7 @@ import "../styles/DataBody.css";
 
 function DataBody({key, pic, name, email, phone, dob}) {
    return (
-    <tr key={key}>
+    <tr id={key}>
       <td><img src={pic} /></td>
       <td>{name}</td>
       <td>{phone}</td>

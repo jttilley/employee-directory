@@ -7,29 +7,28 @@ import { Table } from "reactstrap";
 import moment from "moment";
 import EmployeeContext from "./utils/Employee";
 
-let employees = []; //global var for employees list 
+let mainList = []; //global var for mainList list 
 
 function App() {
-  const [usersState, setUsersState] = useState({
-    users: [],
+  const [employeesState, setEmployeesState] = useState({
+    employees: [],
     search: ""
   })
 
-  const { users, search } = usersState;
-
+  const { employees, search } = employeesState;
   
   useEffect(() => {
     initEmployees();
-  }, []);
+  },[]);
 
-  //initialize the employees list
+  //initialize the main List of employees
   const initEmployees = async () => {
     try {
-      const res = await API.getUsers();
+      const res = await API.getEmployees();
       // console.log("getEmployees -> res.data.results", res.data.results);
-      employees = res.data.results;
-      console.log('employees: ', employees);
-      setUsersState({...usersState, users: employees});  
+      mainList = res.data.results;
+      console.log('mainList: ', mainList);
+      setEmployeesState({...employeesState, employees: mainList});  
     } catch (error) {
       console.log("There was an error processing your results.");
     }
@@ -37,14 +36,14 @@ function App() {
 
   // filter list by search
   const searchEmployees = (value) => {
-    const filtered = employees.filter(emp => {
+    const filtered = mainList.filter(emp => {
       const str = `${emp.name.first} ${emp.name.last}
       ${emp.phone}
       ${emp.email}
       ${moment(emp.dob.date).format('MM/DD/YYYY')}`
       return str.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
-    setUsersState({...usersState, search: value, users: filtered});
+    setEmployeesState({...employeesState, search: value, employees: filtered});
   }
 
   // search while typing
@@ -104,32 +103,31 @@ function App() {
     //choose sorting function based on what was clicked
     switch(event.target.innerText) {
       case "Name":
-        sorted = users.sort(sortNames);
+        sorted = employees.sort(sortNames);
         break;
       case "Phone":
-        sorted = users.sort(sortPhones);
+        sorted = employees.sort(sortPhones);
         break;
       case "Email":
-        sorted = users.sort(sortEmails);
+        sorted = employees.sort(sortEmails);
         break;
       case "Date of Birth":
-        sorted = users.sort(sortDOBs);
+        sorted = employees.sort(sortDOBs);
         break;
     }
 
     // console.log('sorted: ', sorted);
-    setUsersState({...usersState, users: sorted});
+    setEmployeesState({...employeesState, employees: sorted});
   }
 
   return (
     <EmployeeContext.Provider
       value={{
         search,
-        users,
+        employees,
         handleInputChange,
       }}
     >
-
       <div>
         <Header />
         <Nav />
@@ -137,21 +135,21 @@ function App() {
           <thead>
             <tr>
               <th>Image</th>
-              <th id="name" onClick={handleClickSort}>Name</th>
+              <th onClick={handleClickSort}>Name</th>
               <th onClick={handleClickSort}>Phone</th>
               <th onClick={handleClickSort}>Email</th>
               <th onClick={handleClickSort}>Date of Birth</th>
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {employees.map(emp => (
               <DataBody 
-                key={user.cell}
-                pic={user.picture.thumbnail}
-                name={`${user.name.first} ${user.name.last}`}
-                phone={user.phone}
-                email={user.email}
-                dob={moment(user.dob.date).format('MM/DD/YYYY')}
+                key={emp.cell}
+                pic={emp.picture.thumbnail}
+                name={`${emp.name.first} ${emp.name.last}`}
+                phone={emp.phone}
+                email={emp.email}
+                dob={moment(emp.dob.date).format('MM/DD/YYYY')}
               />
             ))}
           </tbody>
